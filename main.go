@@ -22,15 +22,15 @@ func main() {
 		Database: config.DB_DBNAME,
 	})
 
-	// if err := db.CheckConnection(); err != nil{
-	// 	log.Fatal("cannot connect to database")
-	// }
+	if err := db.CheckConnection(); err != nil{
+		log.Fatal("cannot connect to database")
+	}
 
-	runGinServer(config, db)
+	runHTTPServer(config, db)
 }
 
 
-func runGinServer(config config.Config, db database.Database) {
+func runHTTPServer(config config.Config, db database.Database) {
 	server, err := server.NewServer(config, db)
 	if err != nil {
 		log.Fatal("cannot create server")
