@@ -20,11 +20,6 @@ func getPointIndex(array []database.Point, id string) (int){
 	return -1
 }
 
-type getRouteRequest struct {
-	Start string `json:"start"`
-	Stop string `json:"stop"`
-}
-
 func (s *Server) getRoute(ctx *gin.Context) {
 	var req getRouteRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -65,4 +60,9 @@ func (s *Server) getRoute(ctx *gin.Context) {
 	for _,i := range path {
 		fmt.Println(points[i])
 	}
+}
+
+type getRouteRequest struct {
+	Start string `json:"start"`
+	Stop string `json:"stop"`
 }
