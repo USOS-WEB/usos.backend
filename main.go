@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"os"
 
 	"github.com/USOS-WEB/usos.backend/config"
 	"github.com/USOS-WEB/usos.backend/database"
@@ -37,7 +36,7 @@ func runHTTPServer(config config.Config, db database.Database) {
 		log.Fatal("cannot create server")
 	}
 
-	err = server.Start(":" + os.Getenv("PORT"))
+	err = server.Start(config.ADDRESS)
 	if err != nil {
 		log.Fatal("cannot start server")
 	}
