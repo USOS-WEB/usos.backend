@@ -35,13 +35,7 @@ func (db *data) Test() {
 }
 
 func Connect(config pg.Options) Database {
-	opt, err := pg.ParseURL("postgres://usos:FXpORBHvl0xQC86KXX2huhvOpDziBDSA@dpg-cdiskbsgqg433fdb883g-a/usos")
-	if err != nil {
-	panic(err)
-	}
-
-	db := pg.Connect(opt)
-
+	db := pg.Connect(&config)
 	if err:= db.Ping(context.Background()); err != nil{
 		fmt.Println(err)
 	}else{
