@@ -27,6 +27,7 @@ func (server *Server) setupRouter() {
 
 	router.Use(CORSMiddleware())
 
+	router.GET("/", server.nothing)
 	router.POST("/route", server.getRoute)
 	router.GET("/points", server.getAllPoints)
 
