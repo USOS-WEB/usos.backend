@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
 	"log"
 
@@ -35,7 +36,17 @@ func (db *data) Test() {
 }
 
 func Connect(config pg.Options) Database {
-	db := pg.Connect(&config)
+	opt, err := pg.ParseURL("postgres://usos:FXpORBHvl0xQC86KXX2huhvOpDziBDSA@dpg-cdiskbsgqg433fdb883g-a.frankfurt-postgres.render.com/usos?sslmode=disable")
+	if err != nil {
+	panic(err)
+	}
+
+	opt.TLSConfig = &tls.Config{
+		InsecureSkipVerify:          true,
+	}
+
+	db := pg.Connect(opt)
+
 	if err:= db.Ping(context.Background()); err != nil{
 		fmt.Println(err)
 	}else{
