@@ -37,7 +37,7 @@ func runHTTPServer(config config.Config, db database.Database) {
 		log.Fatal("cannot create server")
 	}
 
-	err = server.Start(os.Getenv("PORT"))
+	err = server.Start(":" + os.Getenv("PORT"))
 	if err != nil {
 		log.Fatal("cannot start server")
 	}
