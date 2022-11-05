@@ -12,3 +12,17 @@ type Point struct {
 	Description string
 	Floor_areas string
 }
+
+type Floor struct {
+	Id 			int
+	Url			string
+	Width		int
+	Height		int
+	Name 		string
+	Description string
+}
+
+type PointFloor struct {
+	PointId	string
+	FloorId	int
+}
