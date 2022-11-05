@@ -47,7 +47,7 @@ func Connect(config pg.Options) Database {
 
 func (db *data) CheckConnection() error {
 	if err:= db.DB.Ping(context.Background()); err != nil{
-		return fmt.Errorf("No connection to database: %s", err)
+		return fmt.Errorf("no connection to database: %s", err)
 	}
 
 	return nil

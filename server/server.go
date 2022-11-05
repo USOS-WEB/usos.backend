@@ -26,6 +26,7 @@ func (server *Server) setupRouter() {
 	router := gin.Default()
 
 	router.POST("/route", server.getRoute)
+	router.GET("/points", server.getAllPoints)
 
 	server.router = router
 }

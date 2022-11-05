@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/USOS-WEB/usos.backend/database"
@@ -57,12 +56,46 @@ func (s *Server) getRoute(ctx *gin.Context) {
 
 	path := b.Path(getPointIndex(points, req.Stop))
 
-	for _,i := range path {
-		fmt.Println(points[i])
+	responsePoints := []ResponsePoint{}
+
+	for _, i := range path {
+
+		responsePoint := ResponsePoint{
+			Id:          points[i].Id,
+			Name:        points[i].Name,
+			Description: points[i].Description,
+			Floor_areas: points[i].Floor_areas,
+			Url:         points[i].Url,
+			Width:       points[i].Width,
+			Height:      points[i].Height,
+			Floors:      []string{},
+		}
+		responsePoints = append(responsePoints, )
 	}
+
+	res := getRouteResponse{
+		Path: points,
+	}
+
+	ctx.JSON(http.StatusOK, res)
 }
 
 type getRouteRequest struct {
 	Start string `json:"start"`
 	Stop string `json:"stop"`
+}
+
+type getRouteResponse struct {
+	Path []database.Point `json:"path"`
+}
+
+type ResponsePoint struct {
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Floor_areas string `json:"floorArea"`
+	Url         string `json:"img"`
+	Width       string `json:"width"`
+	Height      string `json:"height"`
+	Floors 		[]string `json:"floors"`
 }
