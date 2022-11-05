@@ -136,7 +136,7 @@ type ResponsePoint struct {
 type ResponseFloor struct {
 	Id          int `json:"id"`
 	Name        string `json:"name"`
-	Image	Image `json"image"`
+	Image	Image `json:"image"`
 }
 
 type Image struct {
