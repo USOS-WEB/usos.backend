@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/USOS-WEB/usos.backend/config"
@@ -23,7 +24,8 @@ func main() {
 	})
 
 	if err := db.CheckConnection(); err != nil{
-		log.Fatal("cannot connect to database")
+		// log.Fatal("cannot connect to database")
+		fmt.Print("cannot connect to database")
 	}
 
 	runHTTPServer(config, db)
