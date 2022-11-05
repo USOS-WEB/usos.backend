@@ -17,4 +17,6 @@ type Database interface {
 
 	PointSelectByID(id string) (*Point, error)
 	GetAllEdgePoints() (edgePoints []EdgePoints, err error)
+	FloorIdSelectByPointId(id string) (*[]Point_floor, error)
+	FloorSelect() (*[]Floor, error)
 }

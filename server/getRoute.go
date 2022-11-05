@@ -59,6 +59,17 @@ func (s *Server) getRoute(ctx *gin.Context) {
 	responsePoints := []ResponsePoint{}
 
 	for _, i := range path {
+		floors, err := s.db.FloorIdSelectByPointId(points[i].Id)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		floorsDone := []string{}
+
+		for _,floor := range *floors{
+			floorsDone = append(floorsDone, floor.Floor_id)
+		}
 
 		responsePoint := ResponsePoint{
 			Id:          points[i].Id,
@@ -68,13 +79,34 @@ func (s *Server) getRoute(ctx *gin.Context) {
 			Url:         points[i].Url,
 			Width:       points[i].Width,
 			Height:      points[i].Height,
-			Floors:      []string{},
+			Floors:      floorsDone,
 		}
-		responsePoints = append(responsePoints, )
+		responsePoints = append(responsePoints, responsePoint)
+	}
+
+	allFloors, err := s.db.FloorSelect()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	floorsToSend := []ResponseFloor{}
+
+	for _,floor := range *allFloors{
+		floorsToSend = append(floorsToSend, ResponseFloor{
+			Id:    floor.Id,
+			Name:  floor.Name,
+			Image: Image{
+				Url:    floor.Url,
+				Width:  floor.Width,
+				Height: floor.Height,
+			},
+		})
 	}
 
 	res := getRouteResponse{
-		Path: points,
+		Path:   responsePoints,
+		Floors: floorsToSend,
 	}
 
 	ctx.JSON(http.StatusOK, res)
@@ -86,7 +118,8 @@ type getRouteRequest struct {
 }
 
 type getRouteResponse struct {
-	Path []database.Point `json:"path"`
+	Path []ResponsePoint `json:"path"`
+	Floors []ResponseFloor `json:"floors"`
 }
 
 type ResponsePoint struct {
@@ -98,4 +131,16 @@ type ResponsePoint struct {
 	Width       string `json:"width"`
 	Height      string `json:"height"`
 	Floors 		[]string `json:"floors"`
+}
+
+type ResponseFloor struct {
+	Id          int `json:"id"`
+	Name        string `json:"name"`
+	Image	Image `json"image"`
+}
+
+type Image struct {
+	Url         string `json:"url"`
+	Width       int `json:"width"`
+	Height      int `json:"height"`
 }
